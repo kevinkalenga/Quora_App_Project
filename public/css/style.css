@@ -11,6 +11,8 @@
     --border-radius: 3px;
     --border: 1px solid var(--gray-light);
     --color: #636466;
+    --gray-light: #ddd;
+    --color-primary: white;
     --color-dark: #444;
     --gray: #636466;
     --gray-dark: #444;
@@ -124,6 +126,10 @@ ul {
     margin: 20px;
 }
 
+.mr-5 {
+    margin-right: 5px;
+}
+
 /* padding */
 
 .p-5 {
@@ -146,4 +152,58 @@ ul {
 /* general */
 .content {
     max-width: var(--max-width);
+}
+
+.btn:hover {
+    opacity: 0.8;
+    transition: opacity 0.4s;
+}
+
+.btn {
+    border-radius: var(--border-radius);
+    padding: 10px 20px;
+    border: 0;
+    box-shadow: var(--box-shadow);
+    cursor: pointer;
+}
+
+.btn-small {
+    padding: 5px 15px;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+.btn-primary-stroke {
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    background: white;
+}
+
+/* header */
+header {
+    box-shadow: var(--box-shadow);
+}
+
+.header-logo {
+    width: 150px;
+}
+
+.header-search {
+    border-radius: var(--border-radius);
+    background: var(--gray-light);
+    max-width: 400px;
+}
+
+.header-search input {
+    border: 0;
+    outline: 0;
+    background: var(--gray-light);
+}
+
+.header-logo img {
+    max-width: 150px;
 }
