@@ -1,4 +1,4 @@
-/* reset */
+/*thème */
 
 :root {
     --primary: #12CBC4;
@@ -8,15 +8,37 @@
     --success: #009432;
     --font-family: 'Open Sans', sans-serif;
     --box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
-    ;
     --border-radius: 3px;
     --border: 1px solid var(--gray-light);
     --color: #636466;
     --color-dark: #444;
     --gray: #636466;
     --gray-dark: #444;
+    --max-width: 1200px;
 }
 
+/* debug */
+
+.b1 {
+    background: red;
+}
+
+.b2 {
+    background: blue;
+}
+
+.b3 {
+    background: yellow;
+}
+
+.b4 {
+    background: orange;
+}
+
+
+
+
+/* reset */
 * {
     margin: 0;
     padding: 0;
@@ -56,7 +78,7 @@ ul {
     flex-flow: row wrap;
 }
 
-.flex-direction {
+.flex-column {
     flex-direction: column;
 }
 
@@ -74,6 +96,18 @@ ul {
 
 .justify-content-end {
     justify-content: flex-end;
+}
+
+.justify-content-between {
+    justify-content: space-between;
+}
+
+.justify-content-around {
+    justify-content: space-around;
+}
+
+.flex-fill {
+    flex: 1;
 }
 
 /* margin */
@@ -102,4 +136,14 @@ ul {
 
 .p-20 {
     padding: 20px;
+}
+
+/* sidebar */
+.sidebar {
+    min-width: 200px;
+}
+
+/* general */
+.content {
+    max-width: var(--max-width);
 }

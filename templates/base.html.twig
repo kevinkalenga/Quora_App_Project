@@ -7,7 +7,7 @@
 			{% endblock %}
 		</title>
 		<link rel="stylesheet" href="{{asset('css/style.css')}}">
-		<script defer src="{{asset('js/style.css')}}"></script>
+		<script defer src="{{asset('js/index.js')}}"></script>
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Limelight&family=Liu+Jian+Mao+Cao&family=Lobster&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Mulish:wght@300;400;700&family=Open+Sans:ital,wght@0,400;0,600;1,400;1,600&family=Roboto+Mono:wght@300;400&display=swap" rel="stylesheet">
@@ -15,7 +15,16 @@
 		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
 
 	</head>
-	<body>
-		{% block body %}{% endblock %}
-	</body>
-</html>
+	<body class="d-flex flex-column">
+		<header class="b1">Header</header>
+		<div class="flex-fill b2 d-flex flex-row-nowrap justify-content-center">
+			<div class="content d-flex flex-row-nowrap flex-fill">
+				<div class="sidebar b1">Sidebar</div>
+				<div class="flex-fill b4"> {% block body %}{% endblock %}
+					</div>
+				</div>
+			</div>
+
+			<footer class="b3">Footer</footer>
+		</body>
+	</html>
