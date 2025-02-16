@@ -12,6 +12,7 @@ final class HomeController extends AbstractController
     public function index(): Response
     {
 
+
         $questions = [
             [
                 'id' => '1',

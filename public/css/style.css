@@ -257,6 +257,20 @@ textarea {
     font-size: var(--font-size-small);
 }
 
+/* flush */
+
+.flash {
+    padding: 20px;
+    text-align: center;
+    color: #fff;
+}
+
+.flash-success {
+    background-color: var(--success);
+}
+
+
+
 /* sidebar */
 .sidebar {
     min-width: 200px;
