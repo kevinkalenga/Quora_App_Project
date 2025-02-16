@@ -14,6 +14,7 @@ final class HomeController extends AbstractController
 
         $questions = [
             [
+                'id' => '1',
                 'title' => "Je suis une super question",
                 'content' => "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte",
                 'rating' => 20,
@@ -24,6 +25,7 @@ final class HomeController extends AbstractController
                 'nbrOfResponse' => 15
             ],
             [
+                'id' => '2',
                 'title' => "Je suis une super question",
                 'content' => "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte",
                 'rating' => 0,
@@ -34,6 +36,7 @@ final class HomeController extends AbstractController
                 'nbrOfResponse' => 15
             ],
             [
+                'id' => '3',
                 'title' => "Je suis une super question",
                 'content' => "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte",
                 'rating' => -15,
