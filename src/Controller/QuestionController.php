@@ -38,19 +38,14 @@ final class QuestionController extends AbstractController
         ]);
     }
     #[Route('/question/{id}', name: 'question_show')]
-    public function show(Request $request, string $id): Response
+    // recup de l'id à partir de convertisseur des paramètres
+    public function show(Question $question): Response
     {
 
-        $question = [
-            'title' => "Je suis une super question",
-            'content' => "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte",
-            'rating' => 20,
-            'author' => [
-                'name' => "Xiping Golba",
-                'avatar' => "https://randomuser.me/api/portraits/men/90.jpg"
-            ],
-            'nbrOfResponse' => 15
-        ];
+
+        // 'name' => "Xiping Golba",
+        // 'avatar' => "https://randomuser.me/api/portraits/men/90.jpg"
+
 
         return $this->render('question/show.html.twig', [
             'question' => $question,
