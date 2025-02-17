@@ -8,13 +8,7 @@
 		{% for question in questions %}
 
 			<a href="{{path('question_show', {id: question.id})}}" class="block d-flex flex-row mb-20 block-shadow">
-				<div class="d-flex flex-column mr-20 align-items-center">
-					<i class="fas fa-arrow-up {{question.rating > 0 ? 'rating-up': ''}}"></i>
-					<p class="text-small {{question.rating > 0 ? 'rating-up': question.rating < 0 ? 'rating-down'}}">
-						{{question.rating}}
-					</p>
-					<i class="fas fa-arrow-down {{question.rating < 0 ? 'rating-down':''}}"></i>
-				</div>
+				{% include "partials/_rating.html.twig" with {rating:question.rating} %}
 				<div class="flex-fill d-flex flex-column">
 					<div class="mb-20 question-content pb-20">
 						<h3 class="mb-20">{{question.title}}</h3>
@@ -22,9 +16,9 @@
 					</div>
 					<div class="d-flex flex-row justify-content-between">
 						<div class="d-flex flex-row align-items-center">
-							<img class="avatar mr-10" src="{{question.author.avatar}}"/>
+							<img class="avatar mr-10" src="https://randomuser.me/api/portraits/men/90.jpg"/>
 							<small>Demandé par
-								<span class="clickable">{{question.author.name}}</span>
+								<span class="clickable">Xiping Golba</span>
 							</small>
 						</div>
 						<div class="d-flex flex-row align-items-center">

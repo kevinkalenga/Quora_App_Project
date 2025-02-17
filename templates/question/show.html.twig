@@ -11,33 +11,44 @@
 
 {% block body %}
 	<div class="block">
-		<div class="d-flex flex-row-nowrap align-items-center pb-30">
-			<h3 class="mr-10">{{question.title}}</h3>
-			<div class="question-tag">Question</div>
-			<img class="avatar ml-auto" src="https://randomuser.me/api/portraits/men/90.jpg">
-		</div>
 
-		<p class="question-text">{{question.content}}</p>
-		<div class="separator"></div>
+		<div class="d-flex flex-row-nowrap">
+			{% include "partials/_rating.html.twig" with {rating:question.rating} %}
 
-		{% for comment in question.comments %}
-			<div class="question-response-elem mb-20">
-				<div class="d-flex flex-row-nowrap align-items-center pb-10">
-					<img class="avatar mr-10" src="https://randomuser.me/api/portraits/women/16.jpg">
-					<p class="clickable">Aminata Camara</p>
-					<small class="ml-auto">12/12/24</small>
+			<div class="d-flex flex-column">
+				<div class="d-flex flex-row-nowrap align-items-center pb-30">
+					<h3 class="mr-10">{{question.title}}</h3>
+					<div class="question-tag">Question</div>
+					<img class="avatar ml-auto" src="https://randomuser.me/api/portraits/men/90.jpg">
 				</div>
-				<p class="question-response-text">{{comment.content}}</p>
+
+				<p class="question-text">{{question.content}}</p>
+				<div class="separator"></div>
+
+				{% for comment in question.comments %}
+					<div class="d-flex flex-row-nowrap mb-20">
+						{% include "partials/_rating.html.twig" with {rating:question.rating} %}
+						<div class="d-flex flex-column">
+							<div class="d-flex flex-row-nowrap align-items-center pb-10">
+								<img class="avatar mr-10" src="https://randomuser.me/api/portraits/men/90.jpg">
+								<p class="clickable">Xiping Golba</p>
+								<small class="ml-auto">12/12/24</small>
+							</div>
+							<p class="question-response-text">{{comment.content}}</p>
+						</div>
+
+					</div>
+
+				{% endfor %}
+
+				<h3 class="pb-20">Votre réponse</h3>
+				<div class="comment-form">
+					{{form_start(form)}}
+					{{form_rest(form)}}
+					<button class="btn btn-primary">Soumettre</button>
+					{{form_end(form)}}
+				</div>
 			</div>
-
-		{% endfor %}
-
-		<h3 class="pb-20">Votre réponse</h3>
-		<div class="comment-form">
-			{{form_start(form)}}
-			{{form_rest(form)}}
-			<button class="btn btn-primary">Soumettre</button>
-			{{form_end(form)}}
 		</div>
 	</div>
 
