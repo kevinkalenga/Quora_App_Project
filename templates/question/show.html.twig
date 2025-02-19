@@ -13,12 +13,12 @@
 	<div class="block">
 
 		<div class="d-flex flex-row-nowrap">
-			{% include "partials/_rating.html.twig" with {rating:question.rating} %}
+			{% include "partials/_rating.html.twig" with { rating: question.rating, from: 'question', id: question.id } %}
 
 			<div class="d-flex flex-column">
 				<div class="d-flex flex-row-nowrap align-items-center pb-30">
 					<h3 class="mr-10">{{question.title}}</h3>
-					<div class="question-tag">Question</div>
+					<div class="question-tag">QUESTION</div>
 					<img class="avatar ml-auto" src="https://randomuser.me/api/portraits/men/90.jpg">
 				</div>
 
@@ -27,7 +27,7 @@
 
 				{% for comment in question.comments %}
 					<div class="d-flex flex-row-nowrap mb-20">
-						{% include "partials/_rating.html.twig" with {rating:question.rating} %}
+						{% include "partials/_rating.html.twig" with {rating:comment.rating, from: 'comment', id: comment.id} %}
 						<div class="d-flex flex-column">
 							<div class="d-flex flex-row-nowrap align-items-center pb-10">
 								<img class="avatar mr-10" src="https://randomuser.me/api/portraits/men/90.jpg">
