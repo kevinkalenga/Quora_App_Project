@@ -256,6 +256,10 @@ textarea {
     border-radius: 50%;
 }
 
+.avatar-lg {
+    width: 40px;
+}
+
 .clickable {
     color: var(--primary);
     font-weight: var(--font-weight-semi-bold);
@@ -398,4 +402,10 @@ html::-webkit-scrollbar {
 /* question */
 .question-content {
     border-bottom: 1px solid var(--gray-light);
+}
+
+.question-text,
+.question-response-text {
+    line-height: var(--line-height-hight);
+    white-space: pre-wrap;
 }
