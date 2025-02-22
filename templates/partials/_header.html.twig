@@ -10,7 +10,7 @@
 
 		{%- if is_granted('IS_AUTHENTICATED_FULLY') -%}
 			<div class="d-flex flex-row-nowrap justify-content-center">
-				<a href="#">
+				<a href="{{path('current_user')}}">
 					<img src="{{ app.user.picture }}" class="avatar avatar-lg mr-10">
 				</a>
 

@@ -19,7 +19,7 @@
 				<div class="d-flex flex-row-nowrap align-items-center pb-30">
 					<h3 class="mr-10">{{question.title}}</h3>
 					<div class="question-tag">QUESTION</div>
-					<img class="avatar ml-auto" src="https://randomuser.me/api/portraits/men/90.jpg">
+					<img class="avatar ml-auto" src="{{question.author.picture}}">
 				</div>
 
 				<p class="question-text">{{question.content}}</p>
@@ -31,11 +31,11 @@
 					<div class="d-flex flex-row-nowrap mb-20">
 						{% include "partials/_rating.html.twig" with {rating:comment.rating, from: 'comment', id: comment.id} %}
 						<div class="d-flex flex-column">
-							<div class="d-flex flex-row-nowrap align-items-center pb-10">
-								<img class="avatar mr-10" src="https://randomuser.me/api/portraits/men/90.jpg">
-								<p class="clickable">Xiping Golba</p>
+							<a href="{{path('user', {id : comment.author.id})}}" class="d-flex flex-row-nowrap align-items-center pb-10">
+								<img class="avatar mr-10" src="{{comment.author.picture}}">
+								<p class="clickable">{{comment.author.fullname}}</p>
 								<small class="ml-auto">{{comment.createdAt | ago(locale="fr")}}</small>
-							</div>
+							</a>
 							<p class="question-response-text">{{comment.content}}</p>
 						</div>
 
