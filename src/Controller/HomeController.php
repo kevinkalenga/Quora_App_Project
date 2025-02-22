@@ -15,7 +15,7 @@ final class HomeController extends AbstractController
     {
 
 
-        $questions = $questionRepository->findAll();
+        $questions = $questionRepository->findBy([], ['createdAt' => 'DESC']);
 
 
 
