@@ -162,6 +162,10 @@ small {
     margin-right: 10px;
 }
 
+.mb-10 {
+    margin-bottom: 10px;
+}
+
 .mr-auto {
     margin-right: auto;
 }
@@ -408,4 +412,9 @@ html::-webkit-scrollbar {
 .question-response-text {
     line-height: var(--line-height-hight);
     white-space: pre-wrap;
+}
+
+.profile-picture {
+    width: 150px;
+    border-radius: var(--border-radius);
 }
