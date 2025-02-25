@@ -15,9 +15,9 @@ final class HomeController extends AbstractController
     {
 
 
-        $questions = $questionRepository->findBy([], ['createdAt' => 'DESC']);
+        // $questions = $questionRepository->findBy([], ['createdAt' => 'DESC']);
 
-
+        $questions = $questionRepository->getQuestionsWithAuthors();
 
 
         return $this->render('home/index.html.twig', [

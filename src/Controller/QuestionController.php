@@ -8,7 +8,7 @@ use App\Entity\Comment;
 use App\Form\CommentType;
 use App\Form\QuestionType;
 use Doctrine\ORM\EntityManagerInterface;
-// use App\Repository\QuestionRepository;
+use App\Repository\QuestionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,9 +47,9 @@ final class QuestionController extends AbstractController
     }
     #[Route('/question/{id}', name: 'question_show')]
     // recup de l'id à partir de convertisseur des paramètres
-    public function show(Request $request, Question $question, EntityManagerInterface $em): Response
+    public function show(Request $request, QuestionRepository $questionsRepo, Question $question, int $id, EntityManagerInterface $em): Response
     {
-        // $question = $questionsRepo->getQuestionWithCommentsAndAuthors($id);
+        $question = $questionsRepo->getQuestionWithCommentsAndAuthors($id);
 
         $options = [
             'question' => $question,
@@ -86,10 +86,10 @@ final class QuestionController extends AbstractController
 
         if ($user !== $question->getAuthor()) {
 
-            $vote = $voteRepo->findBy([
+            $vote = $voteRepo->findOneBy([
                 'author' => $user,
                 'question' => $question
-            ])[0] ?? null;
+            ]);
             if ($vote) {
 
                 if (($vote->isLiked() && $score > 0) || (!$vote->isLiked() && $score < 0)) {
@@ -125,10 +125,10 @@ final class QuestionController extends AbstractController
 
         if ($user !== $comment->getAuthor()) {
 
-            $vote = $voteRepo->findBy([
+            $vote = $voteRepo->findOneBy([
                 'author' => $user,
                 'comment' => $comment
-            ])[0] ?? null;
+            ]);
             if ($vote) {
 
                 if (($vote->isLiked() && $score > 0) || (!$vote->isLiked() && $score < 0)) {
