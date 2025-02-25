@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Vote;
 use App\Entity\Question;
 use App\Entity\Comment;
 use App\Form\CommentType;
@@ -13,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use App\Repository\VoteRepository;
 
 final class QuestionController extends AbstractController
 {
@@ -77,20 +79,77 @@ final class QuestionController extends AbstractController
 
     #[Route('/question/rating/{id}/{score}', name: 'question_rating')]
     #[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
-    public function ratingQuestion(Request $request, Question $question, int $score, EntityManagerInterface $em)
+    public function ratingQuestion(Request $request, VoteRepository $voteRepo, Question $question, int $score, EntityManagerInterface $em)
     {
-        $question->setRating($question->getRating() + $score);
-        $em->flush();
+
+        $user = $this->getUser();
+
+        if ($user !== $question->getAuthor()) {
+
+            $vote = $voteRepo->findBy([
+                'author' => $user,
+                'question' => $question
+            ])[0] ?? null;
+            if ($vote) {
+
+                if (($vote->isLiked() && $score > 0) || (!$vote->isLiked() && $score < 0)) {
+                    $em->remove($vote);
+                    $question->setRating($question->getRating() + ($score > 0 ? -1 : 1));
+                } else {
+                    $vote->setIsLiked(!$vote->isLiked());
+                    $question->setRating($question->getRating() + ($score > 0 ? 2 : -2));
+                }
+            } else {
+                $vote = new Vote();
+                $vote->setAuthor($user);
+                $vote->setQuestion($question);
+                $vote->setIsLiked($score > 0 ? true : false);
+                $question->setRating($question->getRating() + $score);
+                $em->persist($vote);
+            }
+
+
+            $em->flush();
+        }
+
+
         $referer = $request->server->get('HTTP_REFERER');
         return $referer ? $this->redirect($referer) : $this->redirectToRoute('home');
     }
 
     #[Route('/comment/rating/{id}/{score}', name: 'comment_rating')]
     #[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
-    public function ratingComment(Request $request, Comment $comment, int $score, EntityManagerInterface $em)
+    public function ratingComment(Request $request, VoteRepository $voteRepo, Comment $comment, int $score, EntityManagerInterface $em)
     {
-        $comment->setRating($comment->getRating() + $score);
-        $em->flush();
+        $user = $this->getUser();
+
+        if ($user !== $comment->getAuthor()) {
+
+            $vote = $voteRepo->findBy([
+                'author' => $user,
+                'comment' => $comment
+            ])[0] ?? null;
+            if ($vote) {
+
+                if (($vote->isLiked() && $score > 0) || (!$vote->isLiked() && $score < 0)) {
+                    $em->remove($vote);
+                    $comment->setRating($comment->getRating() + ($score > 0 ? -1 : 1));
+                } else {
+                    $vote->setIsLiked(!$vote->isLiked());
+                    $comment->setRating($comment->getRating() + ($score > 0 ? 2 : -2));
+                }
+            } else {
+                $vote = new Vote();
+                $vote->setAuthor($user);
+                $vote->setComment($comment);
+                $vote->setIsLiked($score > 0 ? true : false);
+                $comment->setRating($comment->getRating() + $score);
+                $em->persist($vote);
+            }
+
+
+            $em->flush();
+        }
         $referer = $request->server->get('HTTP_REFERER');
         return $referer ? $this->redirect($referer) : $this->redirectToRoute('home');
     }
