@@ -1,6 +1,6 @@
 html {
     font-family: "Open Sans", sans-serif;
-    color:#636466;
+    color: #636466;
 }
 
 a {
@@ -9,6 +9,6 @@ a {
     padding: 10px 15px;
     margin-top: 20px;
     background: #12CBC4;
-    display: block;
+    display: inline-block;
     border-radius: 3px;
 }
