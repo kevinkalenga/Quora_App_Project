@@ -11,6 +11,7 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +19,8 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\Length;
 
 final class SecurityController extends AbstractController
 {
@@ -74,9 +77,49 @@ final class SecurityController extends AbstractController
     public function logout() {}
 
     #[Route('/reset-password/{token}', name: 'reset-password')]
-    public function resetPassword()
+    public function resetPassword(Request $request, EntityManagerInterface $em, string $token, ResetPasswordRepository $resetPasswordRepository, UserPasswordHasherInterface $userPasswordHasher)
     {
-        return $this->json([]);
+        $resetPassword = $resetPasswordRepository->findOneBy(['token' => $token]);
+        if (!$resetPassword || $resetPassword->getExpiredAt() < new \DateTime('now')) {
+            if ($resetPassword) {
+                $em->remove($resetPassword);
+                $em->flush();
+            }
+            $this->addFlash('error', 'Votre demande est expiré veuillez refaire une demande');
+            return $this->redirectToRoute('login');
+        }
+
+
+        $passwordForm = $this->createFormBuilder()
+            ->add('password', PasswordType::class, [
+                'label' => 'Nouveau mot de passe',
+                'constraints' => [
+                    new Length([
+                        'min' => 6,
+                        'minMessage' => 'Le mot de passe doit faire au moins 6 caractères.',
+                    ]),
+                    new NotBlank([
+                        'message' => 'Veuillez renseigner un mot de passe'
+                    ])
+                ]
+            ])
+            ->getForm();
+
+        $passwordForm->handleRequest($request);
+        if ($passwordForm->isSubmitted() && $passwordForm->isValid()) {
+            $password = $passwordForm->get('password')->getData();
+            $user = $resetPassword->getUser();
+            $hash = $userPasswordHasher->hashPassword($user, $password);
+            $user->setPassword($hash);
+            $em->remove($resetPassword);
+            $em->flush();
+            $this->addFlash('success', 'Votre mot de passe a été modifié.');
+            return $this->redirectToRoute('login');
+        }
+
+        return $this->render('security/reset_password_form.html.twig', [
+            'form' => $passwordForm->createView()
+        ]);
     }
 
     #[Route('/reset-password-request', name: 'reset-password-request')]
@@ -111,7 +154,7 @@ final class SecurityController extends AbstractController
                 $email = new TemplatedEmail();
                 $email->to($emailValue)
                     ->subject('Demande de réinitialisation de mot de passe')
-                    ->htmlTemplate('@email_templates/reset-password-request.html.twig')
+                    ->htmlTemplate('@email_templates/reset_password_request.html.twig')
                     ->context([
                         'token' => $token
                     ]);
@@ -121,7 +164,7 @@ final class SecurityController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        return $this->render('security/reset-password-request.html.twig', [
+        return $this->render('security/reset_password_request.html.twig', [
             'form' => $emailForm->createView()
         ]);
     }

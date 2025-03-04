@@ -294,6 +294,10 @@ textarea {
     background-color: var(--success);
 }
 
+.flash-error {
+    background-color: var(--warning);
+}
+
 
 
 /* sidebar */
